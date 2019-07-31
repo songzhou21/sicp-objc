@@ -10,7 +10,7 @@
 #import "SZList.h"
 
 void list_test(void);
-    
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         list_test();
@@ -33,4 +33,18 @@ void list_test(void) {
     NSLog(@"cdr cdr %@ - %@", ab, [[ab cdr] cdr]);
     NSLog(@"list %@, length:%ld", list, [list length]);
     NSLog(@"list append %@", [SZList append:list list2:listB]);
+    NSLog(@"list ref %@", [list objectAtIndex:1]);
+    NSLog(@"list last pair %@", [list lastPair]);
+    NSLog(@"list reverse %@", [list reverse]);
+    
+    [[list map:^id _Nullable(NSNumber * _Nonnull item) {
+        return @(item.integerValue * 2);
+    }] forEach:^(id  _Nonnull item) {
+        NSLog(@"%@", item);
+    }];
+
+    NSLog(@"filter %@", [list filter:^BOOL(NSNumber *  _Nonnull item) {
+        return item.integerValue % 2 == 0;
+    }]);
+
 }

@@ -32,6 +32,15 @@
     return o;
 }
 
+- (NSString *)debugDescription {
+    return [NSString stringWithFormat:@"<%@: %p> %@", [self class], self, self];
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"(%@, %@)", self.first ?: @"nil", self.last ?: @"nil"];
+}
+
+#pragma mark -
 - (id)car {
     return self.first;
 }
@@ -53,12 +62,93 @@
     }
 }
 
-- (NSString *)debugDescription {
-    return [NSString stringWithFormat:@"<%@: %p> %@", [self class], self, self];
+- (SZPair *)lastPair {
+    return [self lastPairWithItems:self];
 }
 
-- (NSString *)description {
-    return [NSString stringWithFormat:@"(%@, %@)", self.first ?: @"nil", self.last ?: @"nil"];
+- (SZPair *)lastPairWithItems:(SZPair *)items {
+    if ([items cdr] == nil) {
+        return items;
+    }
+    
+    return [self lastPairWithItems:[items cdr]];
+}
+
+- (SZPair *)objectAtIndex:(NSInteger)index {
+    return [self objectAtIndex:index items:self];
+}
+
+- (SZPair *)objectAtIndex:(NSInteger)index items:(SZPair *)items {
+    if (index == 0) {
+        return [items car];
+    } else {
+        return [self objectAtIndex:index-1 items:[items cdr]];
+    }
+}
+
+#pragma mark -
+- (SZPair *)map:(SZPairMapBlock)block {
+    NSParameterAssert(block);
+    
+    return [self map:block items:self];
+}
+
+- (SZPair *)map:(SZPairMapBlock)block items:(SZPair *)items {
+    if (!items) {
+        return nil;
+    } else {
+        return [SZPair cons:block([items car])
+                       last:[self map:block items:[items cdr]]];
+    }
+}
+
+- (void)forEach:(SZPairAccessBlock)block {
+    NSParameterAssert(block);
+    
+    [self forEach:block items:self];
+}
+
+- (void)forEach:(SZPairAccessBlock)block items:(SZPair *)items {
+    if (items) {
+        block([items car]);
+        [self forEach:block items:[items cdr]];
+    }
+}
+
+- (SZPair *)filter:(SZPairFilterBlock)block {
+    NSParameterAssert(block);
+    return [self filter:block items:self];
+}
+
+
+- (SZPair *)filter:(SZPairFilterBlock)block items:(SZPair *)items {
+    if (!items) {
+        return nil;
+    } else if (block([items car])) {
+        return [SZPair cons:[items car]
+                       last:[self filter:block items:[items cdr]]];
+    } else {
+        return [self filter:block items:[items cdr]];
+    }
+}
+
+- (SZPair *)reverse {
+    return [self reverseWithItems:self result:nil];
+}
+
+/**
+(reverse-iter (list 1 4 9 16 25) nil)
+(reverse-iter (list 4 9 16 25) (cons 1 nil))
+(reverse-iter (list 9 16 25) (cons 4 (cons 1 nil))))
+ */
+- (SZPair *)reverseWithItems:(SZPair *)items result:(SZPair *)result {
+    if (!items) {
+        return result;
+    } else{
+        return [self reverseWithItems:[items cdr]
+                        result:[SZPair cons:[items car]
+                                       last:result]];
+    }
 }
 
 @end

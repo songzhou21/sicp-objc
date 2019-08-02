@@ -52,7 +52,7 @@
         
     } else if (self.value != value){
        [NSException exceptionWithName:NSGenericException
-                               reason:[NSString stringWithFormat:@"Contradiction: %@", [SZList new:@[self.value, value]]]
+                               reason:[NSString stringWithFormat:@"Contradiction: %@", SZList(@[self.value, value])]
                              userInfo:nil];
     }
 }

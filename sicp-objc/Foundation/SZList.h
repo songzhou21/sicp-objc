@@ -14,6 +14,10 @@ typedef id _Nullable (^SZPairMapBlock)(id item);
 typedef void (^SZPairAccessBlock)(id item);
 typedef BOOL (^SZPairFilterBlock)(id item);
 
+@class SZPair;
+extern SZPair *SZList(NSArray *array);
+extern SZPair *SZListAppend(SZPair *list1, SZPair *list2);
+
 @interface SZPair : NSObject
 
 + (instancetype)cons:(nullable id)first last:(nullable id)last;
@@ -54,7 +58,8 @@ typedef BOOL (^SZPairFilterBlock)(id item);
 
 @end
 
-extern SZPair *SZList(NSArray *array);
-extern SZPair *SZListAppend(SZPair *list1, SZPair *list2);
+NS_INLINE SZPair *SZCons(id first,  id _Nullable last) {
+    return [SZPair cons:first last:last];
+}
 
 NS_ASSUME_NONNULL_END

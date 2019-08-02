@@ -57,15 +57,6 @@
     }
 }
 
-- (void)forEachExcept:(id)exception block:(void(^)(id))block list:(SZPair *)list {
-    [list forEach:^(id  _Nonnull item) {
-        if ([item isEqual:exception]) {
-            return;
-        }
-        
-        block(item);
-    }];
-}
 
 - (void)forgetValueWithRetractor:(id)retractor {
     if ([self.informant isEqual:retractor]) {
@@ -77,11 +68,24 @@
 }
 
 - (void)connectWithNewConstraint:(id)constraint {
-    
+    if (![constraint memq:self.constraints]) {
+        self.constraints = SZCons(constraint, self.constraints);
+    }
 }
 
 - (BOOL)hasValue {
     return self.informant != nil;
+}
+
+#pragma mark - Private
+- (void)forEachExcept:(id)exception block:(void(^)(id))block list:(SZPair *)list {
+    [list forEach:^(id  _Nonnull item) {
+        if ([item isEqual:exception]) {
+            return;
+        }
+        
+        block(item);
+    }];
 }
 
 @end

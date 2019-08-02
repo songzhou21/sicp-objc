@@ -19,10 +19,9 @@ int main(int argc, const char * argv[]) {
 }
 
 void list_test(void) {
-    SZPair *a = [SZPair cons:@"a" last:@"b"];
-    
-    SZPair *ab = [SZPair cons:@"a" last:[SZPair cons:@"a" last:@"b"]];
-    
+    SZPair *a = SZCons(@"a", @"b");
+    SZPair *ab = SZCons(@"a", SZCons(@"a", @"b"));
+
     SZPair *list = SZList(@[@1, @2, @3]);
     SZPair *listB = SZList(@[@4, @5, @6]);
     

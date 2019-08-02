@@ -16,8 +16,8 @@
 @property (nonatomic) id informant;
 @property (nonatomic) SZPair *constraints;
 
-@property (nonatomic, copy) id informAboutValue;
-@property (nonatomic, copy) id informAboutNoValue;
+@property (nonatomic, copy) void(^informAboutValue)(SZConstraint *);
+@property (nonatomic, copy) void(^informAboutNoValue)(SZConstraint *);
 
 @end
 
@@ -70,6 +70,10 @@
 - (void)connectWithNewConstraint:(id)constraint {
     if (![constraint memq:self.constraints]) {
         self.constraints = SZCons(constraint, self.constraints);
+    }
+    
+    if ([self hasValue]) {
+        self.informAboutValue(constraint);
     }
 }
 

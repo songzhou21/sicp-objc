@@ -47,4 +47,14 @@ void list_test(void) {
         return item.integerValue % 2 == 0;
     }]);
 
+    SZPair *eq1 = [SZList new:@[@1, @2, @3]];
+    SZPair *eq11 = [SZList new:@[@1, @2, @3]];
+    SZPair *eq2 = [SZList new:@[@1, @2, @3, @4]];
+
+    NSLog(@"eq? true:%d", [eq1 isEqual:eq11]);
+    NSLog(@"eq? false:%d", [eq1 isEqual:eq2]);
+    NSLog(@"hash: %ld", [eq1 hash]);
+    NSLog(@"memq: %@", [[SZList new:@[@"a"]] memq:[SZList new:@[@"b",
+                                                          [SZList new:@[@"a"]],
+                                                          @"c"]]]) ;
 }

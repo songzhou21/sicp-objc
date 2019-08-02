@@ -24,6 +24,39 @@
 
 @implementation SZPair
 
+- (BOOL)isEqual:(id)other
+{
+    if (other == self) {
+        return YES;
+    } else if (![other isKindOfClass:[self class]]) {
+        return NO;
+    } else {
+        SZPair *pair = other;
+        
+        if ([self.car isEqual:pair.car]) {
+
+            if (self.cdr == nil &&
+                pair.cdr == nil) {
+                return YES;
+            }
+            
+            if (self.cdr == nil ||
+                pair.cdr == nil) {
+                return NO;
+            }
+            
+            return [self.cdr isEqual:pair.cdr];
+        }
+        
+        return NO;
+    }
+}
+
+- (NSUInteger)hash
+{
+    return [self.car hash] ^ [self.cdr hash];
+}
+
 + (instancetype)cons:(id)first last:(id)last {
     SZPair *o = [SZPair new];
     o.first = first;
@@ -148,6 +181,18 @@
         return [self reverseWithItems:[items cdr]
                         result:[SZPair cons:[items car]
                                        last:result]];
+    }
+}
+
+- (SZPair *)memq:(SZPair *)list {
+    if (!list) {
+        return nil;
+    }
+    
+    if ([self isEqual:[list car]]) {
+        return list;
+    } else {
+        return [self memq:[list cdr]];
     }
 }
 

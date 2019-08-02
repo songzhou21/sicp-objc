@@ -37,6 +37,21 @@ typedef BOOL (^SZPairFilterBlock)(id item);
 
 - (SZPair *)reverse;
 
+#pragma mark - Search
+/**
+ scheme memq
+ 
+ self: (cons a '())
+ list: (cons b (cons (cons a '()) (cons c '())))
+ return: (cons (cons a '()) (cons c '()))
+ 
+ memq uses `isEqual:` to compare object with the elements of list
+ 
+ @param list list
+ @return the first pair of list whose car is self
+ */
+- (nullable SZPair *)memq:(SZPair *)list;
+
 @end
 
 @interface SZList : NSObject

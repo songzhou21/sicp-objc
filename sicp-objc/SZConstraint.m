@@ -36,8 +36,8 @@
     return self;
 }
 
-- (void)printProbeWithValue:(double)value {
-    NSLog(@"\nProbe:%@ = %lf", self.name, value);
+- (void)printProbeWithValue:(NSNumber *)value {
+    NSLog(@"\nProbe:%@ = %@", self.name, value);
 }
 
 - (void)processNewValue {
@@ -45,7 +45,7 @@
 }
 
 - (void)processForgetValue {
-    [self printProbeWithValue:-1];
+    [self printProbeWithValue:nil];
 }
 
 @end
@@ -89,16 +89,16 @@
     
     if ([a1 hasValue] &&
         [a2 hasValue]) {
-        [sum setValue:[a1 value] + [a2 value] informant:self];
+        [sum setValue:@([a1 value].doubleValue + [a2 value].doubleValue) informant:self];
     } else if ([a1 hasValue] &&
                [sum hasValue]) {
-        [a2 setValue:[sum value] - [a1 value] informant:self];
+        [a2 setValue:@([sum value].doubleValue - [a1 value].doubleValue) informant:self];
     } else if ([a2 hasValue] &&
                [sum hasValue]) {
-        [a1 setValue:[sum value] - [a2 value] informant:self];
+        [a1 setValue:@([sum value].doubleValue - [a2 value].doubleValue) informant:self];
     } else if ([a1 hasValue] &&
                [sum hasValue]) {
-        [a2 setValue:[sum value] - [a1 value] informant:self];
+        [a2 setValue:@([sum value].doubleValue - [a1 value].doubleValue) informant:self];
     }
 }
 
@@ -154,15 +154,15 @@
          [m1 value] == 0) ||
         ([m2 hasValue] &&
          [m2 value] == 0)) {
-            [product setValue:0 informant:self];
+            [product setValue:@0 informant:self];
         } else if ([m1 hasValue] && [m2 hasValue]) {
-            [product setValue:[m1 value] * [m2 value] informant:self];
+            [product setValue:@([m1 value].doubleValue * [m2 value].doubleValue) informant:self];
         } else if ([product hasValue] &&
                    [m1 hasValue]) {
-            [m2 setValue:[product value] / [m1 value] informant:self];
+            [m2 setValue:@([product value].doubleValue / [m1 value].doubleValue) informant:self];
         } else if ([product hasValue] &&
                    [m2 hasValue]) {
-            [m1 setValue:[product value] / [m2 value] informant:self];
+            [m1 setValue:@([product value].doubleValue / [m2 value].doubleValue) informant:self];
         }
 }
 
@@ -178,19 +178,19 @@
 
 @interface SZConstantConstraint ()
 
-@property (nonatomic) double value;
+@property (nonatomic) NSNumber *value;
 @property (nonatomic) SZConnector *connector;
 
 @end
 
 @implementation SZConstantConstraint
 
-+ (instancetype)constraintWithValue:(double)value connector:(SZConnector *)connector {
++ (instancetype)constraintWithValue:(NSNumber *)value connector:(SZConnector *)connector {
     return [[self alloc] initWithValue:value connector:connector];
 }
 
 
-- (instancetype)initWithValue:(double)value connector:(SZConnector *)connector {
+- (instancetype)initWithValue:(NSNumber *)value connector:(SZConnector *)connector {
     self = [super init];
     
     if (!self) {

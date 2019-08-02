@@ -7,16 +7,40 @@
 //
 
 #import "SZConnector.h"
+#import "SZList.h"
 
 @interface SZConnector ()
 
-@property (nonatomic) double value;
+@property (nonatomic) NSNumber *value;
 @property (nonatomic) id informant;
-//@property (nonatomic, copy)
+@property (nonatomic) SZPair *constraints;
 
 @end
 
 
 @implementation SZConnector
+
+- (void)setValue:(NSNumber *)value informant:(id)informant {
+    if (![self hasValue]) {
+        self.value = value;
+        self.informant = informant;
+    } else if (self.value != value){
+       [NSException exceptionWithName:NSGenericException
+                               reason:[NSString stringWithFormat:@"Contradiction: %@", [SZList new:@[self.value, value]]]
+                             userInfo:nil];
+    }
+}
+
+- (void)forgetValueWithRetractor:(id)retractor {
+    
+}
+
+- (void)connectWithNewConstraint:(id)constraint {
+    
+}
+
+- (BOOL)hasValue {
+    return self.informant != nil;
+}
 
 @end

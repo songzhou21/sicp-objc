@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SZConstantConstraint : NSObject<SZConstraint>
 
-+ (instancetype)constraintWithValue:(double)value connector:(SZConnector *)connector;
++ (instancetype)constraintWithValue:(NSNumber *)value connector:(SZConnector *)connector;
 
 @end
 

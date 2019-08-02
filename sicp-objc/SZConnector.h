@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SZConnector : NSObject
 
 - (BOOL)hasValue;
-- (double)value;
-- (void)setValue:(double)value informant:(id)informant;
+- (NSNumber *)value;
+- (void)setValue:(NSNumber *)value informant:(id)informant;
 
 - (void)forgetValueWithRetractor:(id)retractor;
 - (void)connectWithNewConstraint:(id)constraint;

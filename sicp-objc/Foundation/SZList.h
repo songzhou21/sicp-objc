@@ -54,14 +54,7 @@ typedef BOOL (^SZPairFilterBlock)(id item);
 
 @end
 
-@interface SZList : NSObject
-
-+ (SZPair *)new:(NSArray *)array;
-
-+ (SZPair *)append:(SZPair *)list1 list2:(SZPair *)list2;
-
-
-
-@end
+extern SZPair *SZList(NSArray *array);
+extern SZPair *SZListAppend(SZPair *list1, SZPair *list2);
 
 NS_ASSUME_NONNULL_END

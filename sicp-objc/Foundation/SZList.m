@@ -198,33 +198,28 @@
 
 @end
 
-@implementation SZList
-
-+ (SZPair *)new:(NSArray *)array {
-    NSParameterAssert(array.count);
-    
-
-    return [self makePairWithArray:array];
-}
-
-+ (SZPair *)makePairWithArray:(NSArray *)array {
+#pragma mark - List
+static SZPair *makePairWithArray(NSArray *array) {
     if (array.count == 0) {
         return nil;
     }
     
-    return [SZPair cons:array.firstObject last:[self makePairWithArray:[array sz_cdr]]];
+    return [SZPair cons:array.firstObject last:makePairWithArray([array sz_cdr])];
 }
 
-+ (SZPair *)append:(SZPair *)list1 list2:(SZPair *)list2 {
+
+SZPair *SZList(NSArray *array) {
+    return makePairWithArray(array);
+}
+
+
+SZPair *SZListAppend(SZPair *list1, SZPair *list2) {
     if (!list1) {
         return list2;
     } else {
-        return [SZPair cons:[list1 car] last:[self append:[list1 cdr] list2:list2]];
+        return [SZPair cons:[list1 car] last:SZListAppend([list1 cdr], list2)];
     }
 }
-
-@end
-
 
 @implementation NSArray (SZExt)
 

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SZList.h"
 
-void list_test(void);
+static void list_test(void);
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -23,8 +23,8 @@ void list_test(void) {
     
     SZPair *ab = [SZPair cons:@"a" last:[SZPair cons:@"a" last:@"b"]];
     
-    SZPair *list = [SZList new:@[@1, @2, @3]];
-    SZPair *listB = [SZList new:@[@4, @5, @6]];
+    SZPair *list = SZList(@[@1, @2, @3]);
+    SZPair *listB = SZList(@[@4, @5, @6]);
     
     NSLog(@"%@", a);
     NSLog(@"%@", ab);
@@ -32,7 +32,7 @@ void list_test(void) {
     NSLog(@"cdr %@ - %@", ab, [ab cdr]);
     NSLog(@"cdr cdr %@ - %@", ab, [[ab cdr] cdr]);
     NSLog(@"list %@, length:%ld", list, [list length]);
-    NSLog(@"list append %@", [SZList append:list list2:listB]);
+    NSLog(@"list append %@", SZListAppend(list, listB));
     NSLog(@"list ref %@", [list objectAtIndex:1]);
     NSLog(@"list last pair %@", [list lastPair]);
     NSLog(@"list reverse %@", [list reverse]);
@@ -46,15 +46,17 @@ void list_test(void) {
     NSLog(@"filter %@", [list filter:^BOOL(NSNumber *  _Nonnull item) {
         return item.integerValue % 2 == 0;
     }]);
-
-    SZPair *eq1 = [SZList new:@[@1, @2, @3]];
-    SZPair *eq11 = [SZList new:@[@1, @2, @3]];
-    SZPair *eq2 = [SZList new:@[@1, @2, @3, @4]];
+    
+    SZPair *eq1 = SZList(@[@1, @2, @3]);
+    SZPair *eq11 = SZList(@[@1, @2, @3]);
+    SZPair *eq2 = SZList(@[@1, @2, @3]);
 
     NSLog(@"eq? true:%d", [eq1 isEqual:eq11]);
     NSLog(@"eq? false:%d", [eq1 isEqual:eq2]);
     NSLog(@"hash: %ld", [eq1 hash]);
-    NSLog(@"memq: %@", [[SZList new:@[@"a"]] memq:[SZList new:@[@"b",
-                                                          [SZList new:@[@"a"]],
-                                                          @"c"]]]) ;
+    
+    
+    NSLog(@"memq: %@", [SZList(@[@"a"]) memq:SZList(@[@"b",
+                                                      SZList(@[@"a"]),
+                                                      @"c"])]) ;
 }

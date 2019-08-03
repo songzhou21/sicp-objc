@@ -37,7 +37,7 @@
 }
 
 - (void)printProbeWithValue:(NSNumber *)value {
-    NSLog(@"\nProbe:%@ = %@", self.name, value);
+    NSLog(@"\nProbe: %@ = %@", self.name, value);
 }
 
 - (void)processNewValue {
@@ -96,9 +96,6 @@
     } else if ([a2 hasValue] &&
                [sum hasValue]) {
         [a1 setValue:@([sum value].doubleValue - [a2 value].doubleValue) informant:self];
-    } else if ([a1 hasValue] &&
-               [sum hasValue]) {
-        [a2 setValue:@([sum value].doubleValue - [a1 value].doubleValue) informant:self];
     }
 }
 
@@ -196,13 +193,13 @@
     if (!self) {
         return nil;
     }
-    
-    
-    [self.connector connectWithNewConstraint:self];
-    
+
     self.value = value;
     self.connector = connector;
     
+    
+    [self.connector connectWithNewConstraint:self];
+    [self.connector setValue:value informant:self];
     
     return self;
 }

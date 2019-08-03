@@ -184,15 +184,19 @@
     }
 }
 
-- (SZPair *)memq:(SZPair *)list {
+- (SZPair *)memq:(SZPair *)pair {
+    return [self memq:pair list:self];
+}
+
+- (SZPair *)memq:(SZPair *)pair list:(SZPair *)list {
     if (!list) {
         return nil;
     }
     
-    if ([self isEqual:[list car]]) {
+    if ([pair isEqual:[list car]]) {
         return list;
     } else {
-        return [self memq:[list cdr]];
+        return [self memq:pair list:[list cdr]];
     }
 }
 

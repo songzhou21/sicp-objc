@@ -13,7 +13,7 @@
 @interface SZConnector ()
 
 @property (nonatomic) NSNumber *value;
-@property (nonatomic) id informant;
+@property (nullable, nonatomic) id informant;
 @property (nonatomic) SZPair *constraints;
 
 @property (nonatomic, copy) void(^informAboutValue)(SZConstraint *);
@@ -30,7 +30,6 @@
         return nil;
     }
     
-    self.informant = @(NO);
     _informAboutValue = ^void(SZConstraint *constraint) {
         [constraint processNewValue];
     };
@@ -50,17 +49,15 @@
                       block:self.informAboutValue
                        list:self.constraints];
         
-    } else if (self.value != value){
-       [NSException exceptionWithName:NSGenericException
-                               reason:[NSString stringWithFormat:@"Contradiction: %@", SZList(@[self.value, value])]
-                             userInfo:nil];
+    } else if (![self.value isEqual:value]){
+        [NSException raise:NSGenericException format:@"Contradiction: %@", SZList(@[self.value, value])];
     }
 }
 
 
 - (void)forgetValueWithRetractor:(id)retractor {
-    if ([self.informant isEqual:retractor]) {
-        self.informant = @(NO);
+    if (self.informant == retractor) {
+        self.informant = nil;
         [self forEachExcept:retractor
                       block:self.informAboutNoValue
                        list:self.constraints];
@@ -68,7 +65,7 @@
 }
 
 - (void)connectWithNewConstraint:(id)constraint {
-    if (![constraint memq:self.constraints]) {
+    if (![self.constraints memq:constraint]) {
         self.constraints = SZCons(constraint, self.constraints);
     }
     

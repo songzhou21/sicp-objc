@@ -11,6 +11,7 @@
 		589DD43D22F134860090C718 /* SZConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 589DD43C22F134860090C718 /* SZConnector.m */; };
 		589DD44022F134B20090C718 /* SZConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 589DD43F22F134B20090C718 /* SZConstraint.m */; };
 		589DD44622F1448E0090C718 /* SZList.m in Sources */ = {isa = PBXBuildFile; fileRef = 589DD44522F1448E0090C718 /* SZList.m */; };
+		58F2706D22F4961300997693 /* SZCelsiusFahrenheitConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F2706C22F4961300997693 /* SZCelsiusFahrenheitConverter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		589DD43F22F134B20090C718 /* SZConstraint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZConstraint.m; sourceTree = "<group>"; };
 		589DD44422F1448E0090C718 /* SZList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZList.h; sourceTree = "<group>"; };
 		589DD44522F1448E0090C718 /* SZList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZList.m; sourceTree = "<group>"; };
+		58F2706B22F4961300997693 /* SZCelsiusFahrenheitConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZCelsiusFahrenheitConverter.h; sourceTree = "<group>"; };
+		58F2706C22F4961300997693 /* SZCelsiusFahrenheitConverter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZCelsiusFahrenheitConverter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,8 @@
 				589DD43C22F134860090C718 /* SZConnector.m */,
 				589DD43E22F134B20090C718 /* SZConstraint.h */,
 				589DD43F22F134B20090C718 /* SZConstraint.m */,
+				58F2706B22F4961300997693 /* SZCelsiusFahrenheitConverter.h */,
+				58F2706C22F4961300997693 /* SZCelsiusFahrenheitConverter.m */,
 			);
 			path = "sicp-objc";
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				589DD44622F1448E0090C718 /* SZList.m in Sources */,
+				58F2706D22F4961300997693 /* SZCelsiusFahrenheitConverter.m in Sources */,
 				589DD44022F134B20090C718 /* SZConstraint.m in Sources */,
 				589DD43D22F134860090C718 /* SZConnector.m in Sources */,
 				589DD43522F133DD0090C718 /* main.m in Sources */,

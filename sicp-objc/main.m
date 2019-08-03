@@ -8,17 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "SZList.h"
+#import "SZConnector.h"
+#import "SZCelsiusFahrenheitConverter.h"
 
 static void list_test(void);
+static void constraints_propagation_test(void);
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        list_test();
+        constraints_propagation_test();
     }
     return 0;
 }
 
-void list_test(void) {
+static void list_test(void) {
     SZPair *a = SZCons(@"a", @"b");
     SZPair *ab = SZCons(@"a", SZCons(@"a", @"b"));
 
@@ -55,7 +58,27 @@ void list_test(void) {
     NSLog(@"hash: %ld", [eq1 hash]);
     
     
-    NSLog(@"memq: %@", [SZList(@[@"a"]) memq:SZList(@[@"b",
-                                                      SZList(@[@"a"]),
-                                                      @"c"])]) ;
+    
+    SZPair *memqList = SZList(@[@"b",
+                                SZList(@[@"a"]),
+                                @"c"]);
+    SZPair *memqPair = SZList(@[@"a"]);
+    
+    NSLog(@"memq: list:%@ pair:%@ ret: %@", memqList, memqPair, [memqList memq:memqPair]) ;
+}
+
+
+static void constraints_propagation_test(void) {
+    SZConnector *C = [SZConnector new];
+    SZConnector *F = [SZConnector new];
+    
+    __unused SZCelsiusFahrenheitConverter *converter = [[SZCelsiusFahrenheitConverter alloc] initWithC:C f:F];
+    
+    [SZConstraint probeWithName:@"Celsius temp" connector:C];
+    [SZConstraint probeWithName:@"Fahrenheit temp" connector:F];
+    
+    [C setValue:@25 informant:@"user"];
+    [C forgetValueWithRetractor:@"user"];
+    [F setValue:@212 informant:@"user"];
+    
 }

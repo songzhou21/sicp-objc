@@ -45,16 +45,16 @@ extern SZPair *SZListAppend(SZPair *list1, SZPair *list2);
 /**
  scheme memq
  
- self: (cons a '())
- list: (cons b (cons (cons a '()) (cons c '())))
+ pair: (cons a '())
+ self: (cons b (cons (cons a '()) (cons c '())))
  return: (cons (cons a '()) (cons c '()))
  
  memq uses `isEqual:` to compare object with the elements of list
  
- @param list list
- @return the first pair of list whose car is self
+ @param pair pair
+ @return the first pair of self whose car is pair
  */
-- (nullable SZPair *)memq:(SZPair *)list;
+- (nullable SZPair *)memq:(SZPair *)pair;
 
 @end
 
